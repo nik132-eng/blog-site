@@ -1,16 +1,22 @@
 import React from "react";
 import Image from "next/image";
 
-// Mock data to simulate static content
-const mockData = {
-  title: "Static Title",
-  desc: "Static Description",
-  img: "/1.jpg",
-  username: "Static Username",
-  content: "Static Content   Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sunt deserunt corporis impedit, omnis dignissimos repellendus dolore excepturi ratione eaque deleniti fuga sit quasi nesciunt laborum, nobis suscipit, eveniet repudiandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sunt deserunt corporis impedit, omnis dignissimos repellendus dolore excepturi ratione eaque deleniti fuga sit quasi nesciunt laborum, nobis suscipit, eveniet repudiandae.",
-};
+async function getData() {
+  const res = await fetch("http://localhost:3000/api/posts", {
+    cache: "no-store",
+  });
 
-const BlogPost = () => {
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+const BlogPost = async () => {
+  const data = await getData();
+  console.log("🚀 ~ BlogPost ~ data:", data)
+
   return (
     <div className="container mx-auto">
       <div className="flex">
