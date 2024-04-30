@@ -1,7 +1,7 @@
 import React from "react";
+import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import "tailwindcss/tailwind.css";
 
 async function getData() {
   const res = await fetch("http://localhost:3000/api/post", {
@@ -18,23 +18,21 @@ async function getData() {
 const Blog = async () => {
   const data = await getData();
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className={styles.mainContainer}>
       {data.map((item) => (
-        <Link href={`/blog/${item._id}`} key={item.id}>
-          <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-            <div className="image-container">
-              <Image
-                src={item.img}
-                alt=""
-                width={400}
-                height={250}
-                className="w-full"
-              />
-            </div>
-            <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">{item.title}</div>
-              <p className="text-gray-700 text-base">{item.desc}</p>
-            </div>
+        <Link href={`/blog/${item._id}`} className={styles.container} key={item.id}>
+          <div className={styles.imageContainer}>
+            <Image
+              src={item.img}
+              alt=""
+              width={400}
+              height={250}
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.content}>
+            <h1 className={styles.title}>{item.title}</h1>
+            <p className={styles.desc}>{item.desc}</p>
           </div>
         </Link>
       ))}
